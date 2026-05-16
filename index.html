@@ -1,1657 +1,974 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>High Accuracy Taxi Meter</title>
-    <!-- PWA Manifest for Add to Home Screen -->
-    <link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22Taxi%20Meter%22%2C%22short_name%22%3A%22TaxiMeter%22%2C%22description%22%3A%22High%20Accuracy%20GPS%20Taxi%20Meter%22%2C%22start_url%22%3A%22.%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23667eea%22%2C%22theme_color%22%3A%22%23764ba2%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAAB1klEQVR4nO2ZP0vDUBTFf0QS%2BAcEBxedBMEv4FYc/QZu%2FoEiFdx0EHRw6uAgCDqL4iJIIA6C4CRk0CKCQ0FwKrgIHVxE%2Bhy8NCTS5DW2JG1Mey7c0pC87u%2B95t5DCMjLy8vLy8vLy8vLy8u3CGAtAZwD2AOwI/puBbACYBnAEs0BMAvgHMAjzQEw8f0NwB%2FNBDAOsAjgA0ATwByAJwBNAE0ACwBeAXwC%2BIz4vAvgFsAOgDaAZwA%2F6HcR75sE8BqyvQ1gEcA7KQ%2FgmpRtApgH8EbKA5hPiDYAbEnZJoBZUq7S5gC0I9ZvS9kagA5J1wCckrKfAHYitl8n5T6As4jtl0j5GMAZKZcAdEj5FMAZKZcA3JPyI4DjiPUXpGwA6JJyG8ARgB5J1wF0SbkN4JD0bx%2FAjYj9F0h5H8C1iP0XSLkf4Cpi%2FwVSXgC4iNh%2FgZQ3AS4j9l8g5U2AG4J0LeJ8V0h5E%2BCWIF2LOJ8h5T6AO4J0LeJ8h5QPAO4J0rWI8x1SPgR4IEjXIs53SPkY4JEgXYs43yHlE4AngnQt4nyHlM8AngnStYjzHVI%2BB3ghSNcizndI2QTwSpCuRZzvkHIDwBtBuhZxvkPKLQBtgrQB4C6i%2F78SpA0A5wA%2BRPx%2FJUEa%2FwEcUl5eXl5eXl5eXl5eXvH4AkQQPCfJ%2FwTcAAAAAElFTkSuQmCC%22%2C%22sizes%22%3A%2248x48%22%2C%22type%22%3A%22image/png%22%7D%2C%7B%22src%22%3A%22data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAACXBIWXMAAAsTAAALEwEAmpwYAAAEIklEQVR4nO2dTWhbRRDHf0lT0YNKDxY8iFcP4lU86MGD4KGC4MGrh16K4N2rFy9ePPsBglgQEcRDEBQKCoqCIFIQBA9tPRRBsFBrpVBbS0HwK3gpIvb/b2dhYbMv78287Mfs7gfJP%2B%2FsJv35zc7OzM6GAQMGDBgwYMCAAQMGHBgE0IqgVwG8BeC5gPXHAfQl0C9V%2ByqA5wrWfwTAloE9W0O%2FBHAHwEaNekMAv%2BToP4VyAP0RwPcA7hSo7wH4E8AqgLsA7gH4F8C%2BgP2rAE4B2AhYtx7AawC%2Bq1j/BIBOIN0CgKkK9a4D%2BAXAyQj9FwG8AuBMhfp5AOsj9B8GcBLArQr18wBmIvS3A%2FgIwN0K9fMA3o7Q3wTgUwD3KtTPA9gWob8BwBcAHlSsnwfwWoT%2BVgBfA3hYob4H4JUI%2FS0AvgHwqEL9HwA2R%2BhvBvAdgMcV6psAXo7Q3wLgewBPKtQ3ATwfob8VwA8AnlZobwK4GKHfBvAjgGcV2psAXojQbwfwp0J7E8DZCP1NAH8B%2BFuhvQlgR4R%2B04V%2FAFgJ1N8E8FyEfgtAH8BqoP4mgGci9FstLAHogEUE%2Fc2A%2BpsAHo%2FQbwH4B8BqoP4mgNsR%2Bm0AfYv6mwAejtBvu7AC4F8Aq4H6mwC2Rui3XVgB8AeA1UD9TQD3I%2FRbAFYB%2FAdgNVB%2FE8CDEfotF1YA9ACsBupvArgvQr9lwgoAF8BqoP4mgD0R%2Bi0XVgC4AFYD9TcBHIjQb7mwAsAFsBqovwngQIR%2By4UVAC6A1UD9TQD7I%2FRbLqwAcAGsBupvAtgXod9yYQWAC2A1UH8TwN4I%2FZYLKwBcAKuB%2BpsA9kTot1xYAeACWA3U3wRwMEK%2F5cIKABfAaqD%2BJoDDEfotF1YAuABWA%2FU3AeyL0G%2B5sALABbAaqL8JYH%2BEfsuFFQAugNVA%2FU0ARyL0Wy6sAHABrAbqbwI4GqHfcmEFgAtgNVB%2FE8CxCP2WCysAXACrgfqbAI5H6LdcWAHgAlgN1N8EcCJCv%2BXCCgAXwGqg%2FiaAkxH6LRdWALgAVgP1NwGcitBvubACwAWwGqi%2FCeB0hH7LhRUAHwI4A%2BB0hfo%2BgA8A3KlQ%2F1cA7wJYqVB%2FJ4B3APxXof6vAN4C8HeF%2BjsAvA3gUYX6PwJ4HcCjCvV3AHgLwOMK9VcBvAngUYX6OwC8AeBfAP9UqL8KwI3Q%2F0fN%2Bg9q1l9asL4H4Nua9b0C9dcC9J8C8FXN%2Bj8C%2BF1F%2Fy8AnNesf6ui%2FnkA5zXrX61Q7xSAs5r1z1aodxLAGc36ZyrUOw7ghGb9JyvUOwrgmGb9Ry3WPYG0D2m%2FRLv%2Bw0j7kPYLtOsfRNqHtJ%2BmXf8A0j6k%2FSTt%2BvuR9iHtJ2nX34e0D2k%2FRbv%2BHqR9SPsx2vV3I%2B1D2o%2FQrr8LaR%2FSPky7%2Fk6kfUj7EO36O5D2Ie1DtOtvR9qHtA%2FSrr8NaR%2FS3k%2B7%2FlakfUh7L%2B36W5D2Ie09tOtvRtqHtHfTrr8JaR%2FS3kW7%2FkakfUh7B%2B36G5D2Ie3ttOuvR9qHtLfRrr8WaR%2FS3kq7%2FhqkfUh7C%2B36o5H2Ie3NtOuPRNqHtDfRrj8CaR%2FS3ki7%2FnqkfUh7A%2B36I5D2Ie31tOsHGDBgwIABAwYMGDDgwP8BfwM2DwgHNHKZqQAAAABJRU5ErkJggg%3D%3D%22%2C%22sizes%22%3A%22100x100%22%2C%22type%22%3A%22image/png%22%7D%5D%7D">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            height: 100vh;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        /* Minimized state */
-        body.minimized #map-container {
-            display: none;
-        }
-
-        body.minimized #meter-panel {
-            max-width: 100%;
-            width: 100%;
-            margin: 0;
-        }
-
-        body.minimized .floating-start-btn {
-            bottom: 20px;
-            right: 20px;
-        }
-
-        body.minimized .floating-start-btn button {
-            width: 60px;
-            height: 60px;
-            font-size: 2em;
-        }
-
-        body.minimized .control-buttons {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            right: 100px;
-            z-index: 1001;
-        }
-
-        #container {
-            display: flex;
-            height: 100vh;
-            padding: 20px;
-            gap: 20px;
-            position: relative;
-        }
-
-        #map-container {
-            flex: 2;
-            position: relative;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            border: 3px solid rgba(255,255,255,0.1);
-            transition: all 0.3s ease;
-        }
-
-        #map {
-            height: 100%;
-            width: 100%;
-            z-index: 1;
-        }
-
-        #meter-panel {
-            flex: 1;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 25px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            border: 1px solid rgba(255,255,255,0.2);
-            overflow-y: auto;
-            max-width: 500px;
-            transition: all 0.3s ease;
-        }
-
-        /* App Header with controls */
-        .app-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 5px;
-        }
-
-        .app-title {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: white;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 8px 16px;
-            border-radius: 30px;
-            font-weight: bold;
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-        }
-
-        .app-title i {
-            font-size: 1.2em;
-        }
-
-        .header-controls {
-            display: flex;
-            gap: 10px;
-        }
-
-        .header-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.2);
-            border: 1px solid rgba(255,255,255,0.3);
-            color: white;
-            font-size: 1.2em;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(5px);
-        }
-
-        .header-btn:hover {
-            background: rgba(255,255,255,0.3);
-            transform: scale(1.1);
-        }
-
-        /* Add to Home Screen prompt */
-        .a2hs-prompt {
-            position: fixed;
-            bottom: 120px;
-            right: 30px;
-            left: 30px;
-            background: white;
-            border-radius: 20px;
-            padding: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            z-index: 2000;
-            display: none;
-            flex-direction: column;
-            gap: 15px;
-            animation: slideUp 0.3s ease;
-            max-width: 400px;
-            margin: 0 auto;
-        }
-
-        .a2hs-prompt.show {
-            display: flex;
-        }
-
-        .a2hs-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .a2hs-icon {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 2em;
-        }
-
-        .a2hs-text {
-            flex: 1;
-        }
-
-        .a2hs-title {
-            font-weight: bold;
-            font-size: 1.2em;
-            color: #2c3e50;
-        }
-
-        .a2hs-subtitle {
-            font-size: 0.9em;
-            color: #6c757d;
-        }
-
-        .a2hs-steps {
-            background: #f8f9fa;
-            border-radius: 15px;
-            padding: 15px;
-        }
-
-        .step {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 8px 0;
-        }
-
-        .step-number {
-            width: 24px;
-            height: 24px;
-            background: #3498db;
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.9em;
-            font-weight: bold;
-        }
-
-        .step-text {
-            color: #2c3e50;
-        }
-
-        .a2hs-buttons {
-            display: flex;
-            gap: 10px;
-        }
-
-        .a2hs-btn {
-            flex: 1;
-            padding: 12px;
-            border: none;
-            border-radius: 12px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .a2hs-btn.primary {
-            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
-            color: white;
-        }
-
-        .a2hs-btn.secondary {
-            background: #e9ecef;
-            color: #2c3e50;
-        }
-
-        .a2hs-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-
-        @keyframes slideUp {
-            from {
-                transform: translateY(100px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        /* Floating Start Button */
-        .floating-start-btn {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 1000;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-        }
-
-        #floatingStartBtn {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #2ecc71, #27ae60);
-            border: none;
-            color: white;
-            font-size: 2.5em;
-            cursor: pointer;
-            box-shadow: 0 10px 30px rgba(46, 204, 113, 0.5);
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 3px solid white;
-            animation: pulse-green 2s infinite;
-        }
-
-        #floatingStartBtn:hover:not(:disabled) {
-            transform: scale(1.1);
-            box-shadow: 0 15px 40px rgba(46, 204, 113, 0.8);
-        }
-
-        #floatingStartBtn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            animation: none;
-            transform: scale(0.9);
-        }
-
-        .floating-label {
-            background: rgba(0, 0, 0, 0.7);
-            color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.9em;
-            font-weight: bold;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255,255,255,0.2);
-            letter-spacing: 1px;
-        }
-
-        .floating-status {
-            position: fixed;
-            bottom: 120px;
-            right: 30px;
-            z-index: 999;
-            background: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 8px 16px;
-            border-radius: 30px;
-            font-size: 0.9em;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255,255,255,0.2);
-            display: none;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .floating-status.active {
-            display: flex;
-        }
-
-        .status-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: #2ecc71;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse-green {
-            0% {
-                box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7);
-            }
-            70% {
-                box-shadow: 0 0 0 20px rgba(46, 204, 113, 0);
-            }
-            100% {
-                box-shadow: 0 0 0 0 rgba(46, 204, 113, 0);
-            }
-        }
-
-        @keyframes pulse {
-            0% {
-                box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7);
-            }
-            70% {
-                box-shadow: 0 0 0 10px rgba(46, 204, 113, 0);
-            }
-            100% {
-                box-shadow: 0 0 0 0 rgba(46, 204, 113, 0);
-            }
-        }
-
-        /* Rest of the existing styles remain the same */
-        .country-info {
-            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
-            color: white;
-            padding: 15px 20px;
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            box-shadow: 0 5px 15px rgba(243, 156, 18, 0.3);
-        }
-
-        .country-flag {
-            font-size: 2.8em;
-            line-height: 1;
-            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.2));
-        }
-
-        .country-details {
-            flex: 1;
-        }
-
-        .country-label {
-            font-size: 0.85em;
-            opacity: 0.9;
-            margin-bottom: 2px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .country-name {
-            font-size: 1.4em;
-            font-weight: bold;
-            margin-bottom: 2px;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
-        }
-
-        .country-city {
-            font-size: 1em;
-            opacity: 0.95;
-        }
-
-        .meter-display {
-            background: #2c3e50;
-            color: #ecf0f1;
-            padding: 25px;
-            border-radius: 20px;
-            text-align: center;
-            box-shadow: inset 0 2px 10px rgba(0,0,0,0.5);
-        }
-
-        .fare {
-            font-size: 4em;
-            font-weight: bold;
-            font-family: 'Courier New', monospace;
-            text-shadow: 0 0 10px rgba(46, 204, 113, 0.5);
-            color: #2ecc71;
-            line-height: 1.2;
-        }
-
-        .currency {
-            font-size: 0.3em;
-            vertical-align: super;
-            color: #bdc3c7;
-        }
-
-        .distance {
-            font-size: 1.5em;
-            color: #3498db;
-            margin: 10px 0;
-        }
-
-        .time {
-            font-size: 1.2em;
-            color: #e74c3c;
-        }
-
-        .charts-container {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .chart-box {
-            background: white;
-            border-radius: 12px;
-            padding: 15px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-
-        .chart-title {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: #2c3e50;
-            font-size: 1em;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-
-        .chart-title i {
-            color: #3498db;
-        }
-
-        .chart-container {
-            position: relative;
-            height: 100px;
-            width: 100%;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            margin-top: 5px;
-        }
-
-        .stat-card {
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            padding: 10px;
-            border-radius: 12px;
-            text-align: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        }
-
-        .stat-label {
-            font-size: 0.75em;
-            color: #6c757d;
-            margin-bottom: 3px;
-            text-transform: uppercase;
-        }
-
-        .stat-value {
-            font-size: 1.1em;
-            font-weight: bold;
-            color: #2c3e50;
-        }
-
-        .stat-value.speed { color: #3498db; }
-        .stat-value.accel { color: #e74c3c; }
-        .stat-value.max { color: #f39c12; }
-        .stat-value.avg { color: #2ecc71; }
-
-        .rates-panel {
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .rates-title {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: #2c3e50;
-            margin-bottom: 15px;
-            font-size: 1.1em;
-            border-bottom: 2px solid #3498db;
-            padding-bottom: 10px;
-        }
-
-        .rates-title i {
-            color: #3498db;
-        }
-
-        .rate-inputs {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-        }
-
-        .rate-item {
-            text-align: center;
-        }
-
-        .rate-label {
-            font-size: 0.85em;
-            color: #6c757d;
-            margin-bottom: 5px;
-        }
-
-        .rate-input {
-            width: 100%;
-            padding: 10px;
-            border: 2px solid #dee2e6;
-            border-radius: 10px;
-            font-size: 1.1em;
-            font-weight: bold;
-            text-align: center;
-            color: #2c3e50;
-            transition: all 0.3s ease;
-        }
-
-        .rate-input:focus {
-            outline: none;
-            border-color: #3498db;
-            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
-        }
-
-        .rate-input:enabled {
-            background: white;
-        }
-
-        .rate-input:disabled {
-            background: #e9ecef;
-            cursor: not-allowed;
-            opacity: 0.7;
-        }
-
-        .control-buttons {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-        }
-
-        button {
-            padding: 15px 20px;
-            border: none;
-            border-radius: 15px;
-            font-size: 1.1em;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            color: white;
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-
-        button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none !important;
-        }
-
-        button:not(:disabled):hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-        }
-
-        #stopBtn {
-            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
-        }
-
-        #resetBtn {
-            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
-        }
-
-        #applyRatesBtn {
-            background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
-            grid-column: span 3;
-            margin-top: 10px;
-        }
-
-        .accuracy-indicator {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 15px;
-            background: #f8f9fa;
-            border-radius: 15px;
-        }
-
-        .accuracy-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: #2ecc71;
-            animation: pulse 2s infinite;
-        }
-
-        .accuracy-text {
-            font-size: 0.9em;
-            color: #2c3e50;
-        }
-
-        .route-info {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 15px;
-            font-size: 0.95em;
-            color: #2c3e50;
-        }
-
-        .route-info i {
-            color: #3498db;
-            margin-right: 8px;
-        }
-
-        .fare-breakdown {
-            background: #f8f9fa;
-            padding: 15px;
-            border-radius: 15px;
-        }
-
-        .breakdown-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px dashed #dee2e6;
-        }
-
-        .breakdown-item:last-child {
-            border-bottom: none;
-            font-weight: bold;
-            color: #2ecc71;
-        }
-
-        .edit-toggle {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-
-        .toggle-switch {
-            position: relative;
-            display: inline-block;
-            width: 60px;
-            height: 34px;
-        }
-
-        .toggle-switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .toggle-slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            transition: .4s;
-            border-radius: 34px;
-        }
-
-        .toggle-slider:before {
-            position: absolute;
-            content: "";
-            height: 26px;
-            width: 26px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-        }
-
-        input:checked + .toggle-slider {
-            background-color: #3498db;
-        }
-
-        input:checked + .toggle-slider:before {
-            transform: translateX(26px);
-        }
-
-        .toggle-label {
-            font-size: 0.9em;
-            color: #2c3e50;
-        }
-
-        #locationAccuracy {
-            font-family: monospace;
-            font-size: 1.1em;
-            color: #2c3e50;
-        }
-
-        .quick-rates {
-            display: flex;
-            gap: 10px;
-            margin-top: 10px;
-        }
-
-        .quick-rate-btn {
-            flex: 1;
-            padding: 8px;
-            background: #e9ecef;
-            color: #2c3e50;
-            font-size: 0.9em;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .quick-rate-btn:hover {
-            background: #3498db;
-            color: white;
-        }
-
-        .note {
-            font-size: 0.85em;
-            color: #6c757d;
-            text-align: center;
-            margin-top: 5px;
-            font-style: italic;
-        }
-
-        /* Install button special style */
-        #installBtn.installed {
-            background: #2ecc71;
-            pointer-events: none;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- SEO Meta Tags -->
+<title>Ceylon Cinnamon Stories — The True Cinnamon from Sri Lanka | ceylon.food</title>
+<meta name="description" content="Discover the ancient stories behind Ceylon cinnamon — the world's only true cinnamon, grown in Sri Lanka for over 2,000 years. Learn why Ceylon cinnamon is healthier, rarer, and more precious than regular cinnamon.">
+<meta name="keywords" content="Ceylon cinnamon, true cinnamon, Sri Lanka cinnamon, Cinnamomum verum, Ceylon spices, buy Ceylon cinnamon, organic cinnamon, cinnamon health benefits, cinnamon sticks, real cinnamon">
+<meta name="author" content="ceylon.food">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://ceylon.food/stories">
+
+<!-- Open Graph (Facebook, WhatsApp) -->
+<meta property="og:title" content="Ceylon Cinnamon Stories — The True Cinnamon from Sri Lanka">
+<meta property="og:description" content="Discover the ancient stories behind Ceylon cinnamon, the world's rarest and most precious spice, grown in Sri Lanka for over 2,000 years.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ceylon.food/stories">
+<meta property="og:site_name" content="ceylon.food">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Ceylon Cinnamon Stories | ceylon.food">
+<meta name="twitter:description" content="The world's only true cinnamon — grown in Sri Lanka for 2,000 years. Discover our stories.">
+
+<!-- Schema.org Structured Data (boosts Google rich results) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Store",
+  "name": "ceylon.food",
+  "url": "https://ceylon.food",
+  "description": "Premium Ceylon cinnamon and spices direct from Sri Lanka",
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "LK"
+  },
+  "sameAs": ["https://ceylon.food"]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Ceylon Cinnamon — The True Cinnamon from Sri Lanka",
+  "description": "The ancient history, health benefits, and unique qualities of Ceylon cinnamon, the world's only true cinnamon grown in Sri Lanka.",
+  "author": {"@type": "Organization", "name": "ceylon.food"},
+  "publisher": {"@type": "Organization", "name": "ceylon.food"},
+  "mainEntityOfPage": "https://ceylon.food/stories"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is Ceylon cinnamon?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ceylon cinnamon (Cinnamomum verum) is the only true cinnamon in the world, grown exclusively in Sri Lanka. Unlike Cassia cinnamon sold in most supermarkets, Ceylon cinnamon has a delicate, sweet flavour and extremely low levels of coumarin, making it safe for daily use."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why is Ceylon cinnamon better than regular cinnamon?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ceylon cinnamon contains up to 1,200 times less coumarin than Cassia cinnamon. High coumarin intake can damage the liver over time. Ceylon cinnamon is the only cinnamon variety recommended for regular daily consumption by European food safety authorities."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Where does Ceylon cinnamon come from?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ceylon cinnamon grows naturally in the wet lowlands of Sri Lanka, particularly in the Matara, Galle, and Kalutara districts. Sri Lanka produces over 80% of the world's true Ceylon cinnamon."
+      }
+    }
+  ]
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --brown-dark: #2C1A0E;
+    --brown-mid: #5C3317;
+    --brown-warm: #8B4513;
+    --cinnamon: #C0672A;
+    --cinnamon-light: #E8904A;
+    --cream: #FAF6F0;
+    --cream-dark: #F0E8DA;
+    --gold: #B8860B;
+    --gold-light: #D4A843;
+    --text-dark: #1A0F08;
+    --text-mid: #4A2C1A;
+    --text-muted: #7A5C44;
+    --white: #FFFDF9;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Source Serif 4', Georgia, serif;
+    background: var(--cream);
+    color: var(--text-dark);
+    font-size: 17px;
+    line-height: 1.75;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 48px;
+    background: rgba(250,246,240,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(192,103,42,0.15);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; font-weight: 700;
+    color: var(--brown-mid);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+  }
+  .nav-logo span { color: var(--cinnamon); }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    font-family: 'Source Serif 4', serif;
+    font-size: 14px; font-weight: 300;
+    color: var(--text-mid);
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--cinnamon); }
+  .nav-cta {
+    background: var(--cinnamon);
+    color: var(--white) !important;
+    padding: 8px 22px;
+    border-radius: 2px;
+    transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--brown-mid) !important; color: var(--white) !important; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center;
+    padding: 120px 24px 80px;
+    position: relative;
+    overflow: hidden;
+    background: var(--brown-dark);
+  }
+  .hero-pattern {
+    position: absolute; inset: 0; opacity: 0.06;
+    background-image: repeating-linear-gradient(45deg, var(--cinnamon) 0, var(--cinnamon) 1px, transparent 0, transparent 50%);
+    background-size: 20px 20px;
+  }
+  .hero-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(192,103,42,0.2);
+  }
+  .hero-ring:nth-child(1) { width: 500px; height: 500px; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+  .hero-ring:nth-child(2) { width: 750px; height: 750px; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+  .hero-ring:nth-child(3) { width: 1000px; height: 1000px; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+
+  .hero-eyebrow {
+    font-family: 'Source Serif 4', serif;
+    font-size: 12px; font-weight: 300;
+    letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--cinnamon-light);
+    margin-bottom: 24px;
+    animation: fadeUp 1s ease both;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(42px, 7vw, 88px);
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    max-width: 820px;
+    margin-bottom: 12px;
+    animation: fadeUp 1s ease 0.15s both;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--cinnamon-light);
+  }
+  .hero-sub {
+    font-size: 19px; font-weight: 300;
+    color: rgba(255,253,249,0.7);
+    max-width: 560px;
+    margin: 20px auto 48px;
+    animation: fadeUp 1s ease 0.3s both;
+  }
+  .hero-actions {
+    display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;
+    animation: fadeUp 1s ease 0.45s both;
+  }
+  .btn-primary {
+    background: var(--cinnamon);
+    color: var(--white);
+    padding: 14px 36px;
+    border-radius: 2px;
+    text-decoration: none;
+    font-size: 14px; letter-spacing: 0.1em; text-transform: uppercase;
+    font-family: 'Source Serif 4', serif; font-weight: 400;
+    transition: background 0.2s, transform 0.15s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: var(--cinnamon-light); transform: translateY(-1px); }
+  .btn-secondary {
+    border: 1px solid rgba(255,253,249,0.35);
+    color: rgba(255,253,249,0.85);
+    padding: 14px 36px;
+    border-radius: 2px;
+    text-decoration: none;
+    font-size: 14px; letter-spacing: 0.1em; text-transform: uppercase;
+    font-family: 'Source Serif 4', serif; font-weight: 400;
+    transition: border-color 0.2s, color 0.2s;
+    display: inline-block;
+  }
+  .btn-secondary:hover { border-color: var(--cinnamon-light); color: var(--cinnamon-light); }
+  .hero-scroll {
+    position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    color: rgba(255,253,249,0.4);
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    animation: fadeUp 1s ease 0.6s both;
+  }
+  .scroll-line {
+    width: 1px; height: 40px;
+    background: linear-gradient(to bottom, rgba(192,103,42,0.6), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    display: flex; align-items: center; justify-content: center;
+    gap: 20px; padding: 48px 0; max-width: 300px; margin: 0 auto;
+  }
+  .divider-line { flex: 1; height: 1px; background: rgba(192,103,42,0.3); }
+  .divider-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--cinnamon); }
+
+  /* ── SECTION BASE ── */
+  section { padding: 100px 24px; }
+  .container { max-width: 1100px; margin: 0 auto; }
+  .container-narrow { max-width: 720px; margin: 0 auto; }
+  .section-label {
+    font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--cinnamon); font-weight: 400;
+    margin-bottom: 16px; display: block;
+  }
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 700; line-height: 1.12;
+    color: var(--brown-dark);
+    margin-bottom: 24px;
+  }
+  h2 em { font-style: italic; color: var(--cinnamon); }
+  h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px; font-weight: 700;
+    color: var(--brown-dark); margin-bottom: 12px;
+  }
+  p { color: var(--text-mid); margin-bottom: 18px; }
+  p:last-child { margin-bottom: 0; }
+
+  /* ── INTRO SECTION ── */
+  .intro-section { background: var(--white); }
+  .intro-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 80px; align-items: center;
+  }
+  .intro-stats {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+    margin-top: 40px;
+  }
+  .stat-card {
+    background: var(--cream);
+    padding: 24px; border-radius: 2px;
+    border-left: 3px solid var(--cinnamon);
+  }
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 38px; font-weight: 700;
+    color: var(--cinnamon); line-height: 1;
+    margin-bottom: 6px;
+  }
+  .stat-label { font-size: 13px; color: var(--text-muted); line-height: 1.4; }
+  .intro-visual {
+    position: relative;
+  }
+  .intro-img-frame {
+    background: var(--cream-dark);
+    border-radius: 2px;
+    aspect-ratio: 4/5;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+    position: relative;
+  }
+  .cinnamon-illustration {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* ── STORY SECTION ── */
+  .story-section { background: var(--cream-dark); }
+  .story-timeline { position: relative; padding-left: 0; }
+  .story-timeline::before {
+    content: '';
+    position: absolute; left: 50%; top: 0; bottom: 0;
+    width: 1px; background: rgba(192,103,42,0.3);
+    transform: translateX(-50%);
+  }
+  .story-item {
+    display: grid; grid-template-columns: 1fr 60px 1fr;
+    gap: 0; align-items: start; margin-bottom: 64px;
+  }
+  .story-item:last-child { margin-bottom: 0; }
+  .story-content {
+    padding: 0 40px;
+  }
+  .story-item:nth-child(even) .story-content-left { order: 3; }
+  .story-item:nth-child(even) .story-center { order: 2; }
+  .story-item:nth-child(even) .story-content-right { order: 1; }
+  .story-center {
+    display: flex; flex-direction: column; align-items: center;
+    padding-top: 8px; position: relative;
+  }
+  .story-year {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px; font-weight: 700;
+    color: var(--white);
+    background: var(--cinnamon);
+    padding: 6px 12px; border-radius: 2px;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+    z-index: 1;
+  }
+  .story-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--cinnamon); margin-top: 12px;
+    flex-shrink: 0;
+  }
+  .story-content-card {
+    background: var(--white);
+    padding: 28px 32px;
+    border-radius: 2px;
+    border-top: 3px solid var(--cinnamon);
+  }
+  .story-content-card h3 { font-size: 20px; margin-bottom: 10px; }
+  .story-content-card p { font-size: 15px; }
+  .story-content-empty { padding: 0 40px; }
+
+  /* ── WHY CEYLON ── */
+  .why-section { background: var(--brown-dark); }
+  .why-section h2 { color: var(--white); }
+  .why-section .section-label { color: var(--cinnamon-light); }
+  .why-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;
+    margin-top: 56px;
+  }
+  .why-card {
+    background: rgba(255,253,249,0.04);
+    padding: 40px 32px;
+    border: 1px solid rgba(192,103,42,0.15);
+    transition: background 0.25s;
+    cursor: default;
+  }
+  .why-card:hover { background: rgba(192,103,42,0.08); }
+  .why-icon {
+    font-size: 32px; margin-bottom: 20px;
+    display: block;
+  }
+  .why-card h3 {
+    color: var(--cream); font-size: 20px; margin-bottom: 12px;
+  }
+  .why-card p { color: rgba(255,253,249,0.6); font-size: 15px; }
+  .why-highlight {
+    background: var(--cinnamon);
+    padding: 40px 32px;
+    border: none;
+  }
+  .why-highlight h3 { color: var(--white); }
+  .why-highlight p { color: rgba(255,253,249,0.85); font-size: 15px; }
+
+  /* ── PROCESS SECTION ── */
+  .process-section { background: var(--white); }
+  .process-steps {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 0; margin-top: 56px; position: relative;
+  }
+  .process-steps::before {
+    content: '';
+    position: absolute; top: 32px; left: 10%; right: 10%;
+    height: 1px; background: rgba(192,103,42,0.25);
+    z-index: 0;
+  }
+  .process-step { text-align: center; padding: 0 20px; position: relative; z-index: 1; }
+  .step-circle {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: var(--cream-dark);
+    border: 2px solid var(--cinnamon);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 20px;
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; font-weight: 700;
+    color: var(--cinnamon);
+    position: relative; z-index: 1;
+    transition: background 0.2s;
+  }
+  .process-step:hover .step-circle { background: var(--cinnamon); color: var(--white); }
+  .process-step h3 { font-size: 17px; margin-bottom: 10px; }
+  .process-step p { font-size: 14px; color: var(--text-muted); }
+
+  /* ── FAQ SECTION ── */
+  .faq-section { background: var(--cream); }
+  .faq-list { margin-top: 48px; }
+  .faq-item {
+    border-bottom: 1px solid rgba(192,103,42,0.2);
+    padding: 24px 0; cursor: pointer;
+  }
+  .faq-question {
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 24px;
+  }
+  .faq-q-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px; font-weight: 700;
+    color: var(--brown-dark);
+    flex: 1;
+  }
+  .faq-toggle {
+    width: 28px; height: 28px; border-radius: 50%;
+    border: 1px solid var(--cinnamon);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    color: var(--cinnamon);
+    font-size: 18px; line-height: 1;
+    transition: background 0.2s, color 0.2s;
+    user-select: none;
+  }
+  .faq-item.open .faq-toggle { background: var(--cinnamon); color: var(--white); }
+  .faq-answer {
+    display: none; padding-top: 16px;
+    font-size: 16px; color: var(--text-mid); line-height: 1.75;
+  }
+  .faq-item.open .faq-answer { display: block; }
+
+  /* ── CTA SECTION ── */
+  .cta-section {
+    background: var(--cinnamon);
+    text-align: center; padding: 100px 24px;
+  }
+  .cta-section .section-label { color: rgba(255,253,249,0.7); }
+  .cta-section h2 { color: var(--white); margin-bottom: 20px; }
+  .cta-section p { color: rgba(255,253,249,0.85); max-width: 560px; margin: 0 auto 40px; }
+  .btn-white {
+    background: var(--white);
+    color: var(--cinnamon);
+    padding: 16px 44px;
+    border-radius: 2px;
+    text-decoration: none;
+    font-size: 14px; letter-spacing: 0.1em; text-transform: uppercase;
+    font-family: 'Source Serif 4', serif; font-weight: 400;
+    transition: background 0.2s, transform 0.15s;
+    display: inline-block;
+    margin: 0 8px 12px;
+  }
+  .btn-white:hover { background: var(--cream); transform: translateY(-1px); }
+  .btn-outline-white {
+    border: 2px solid rgba(255,253,249,0.6);
+    color: var(--white);
+    padding: 14px 44px;
+    border-radius: 2px;
+    text-decoration: none;
+    font-size: 14px; letter-spacing: 0.1em; text-transform: uppercase;
+    font-family: 'Source Serif 4', serif; font-weight: 400;
+    transition: border-color 0.2s;
+    display: inline-block;
+    margin: 0 8px 12px;
+  }
+  .btn-outline-white:hover { border-color: var(--white); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--brown-dark);
+    padding: 60px 48px 40px;
+    color: rgba(255,253,249,0.5);
+  }
+  .footer-grid {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 48px; margin-bottom: 48px;
+    max-width: 1100px; margin-left: auto; margin-right: auto;
+  }
+  .footer-brand .nav-logo { font-size: 26px; display: block; margin-bottom: 14px; }
+  .footer-brand p { font-size: 14px; line-height: 1.7; color: rgba(255,253,249,0.45); }
+  .footer-col h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px; font-weight: 700;
+    color: var(--cream); margin-bottom: 16px;
+    letter-spacing: 0.05em;
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col li { margin-bottom: 10px; }
+  .footer-col a {
+    color: rgba(255,253,249,0.45); text-decoration: none;
+    font-size: 14px; transition: color 0.2s;
+  }
+  .footer-col a:hover { color: var(--cinnamon-light); }
+  .footer-bottom {
+    border-top: 1px solid rgba(255,253,249,0.08);
+    padding-top: 28px;
+    display: flex; justify-content: space-between; align-items: center;
+    max-width: 1100px; margin: 0 auto;
+    font-size: 13px;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.4; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(1.15); }
+  }
+  .reveal {
+    opacity: 0; transform: translateY(32px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    .intro-grid { grid-template-columns: 1fr; gap: 48px; }
+    .story-timeline::before { display: none; }
+    .story-item { grid-template-columns: 1fr; gap: 16px; }
+    .story-center { flex-direction: row; gap: 12px; align-items: center; }
+    .story-dot { margin-top: 0; }
+    .story-content-empty { display: none; }
+    .story-content { padding: 0; }
+    .why-grid { grid-template-columns: 1fr; }
+    .process-steps { grid-template-columns: 1fr 1fr; gap: 40px; }
+    .process-steps::before { display: none; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+  }
+  @media (max-width: 600px) {
+    section { padding: 72px 20px; }
+    .intro-stats { grid-template-columns: 1fr; }
+    .process-steps { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; }
+    .hero-actions { flex-direction: column; align-items: center; }
+  }
+</style>
 </head>
 <body>
-    <div id="container">
-        <!-- Add to Home Screen Prompt -->
-        <div class="a2hs-prompt" id="a2hsPrompt">
-            <div class="a2hs-header">
-                <div class="a2hs-icon">
-                    <i class="fas fa-taxi"></i>
-                </div>
-                <div class="a2hs-text">
-                    <div class="a2hs-title">Install Taxi Meter</div>
-                    <div class="a2hs-subtitle">Add to home screen for quick access</div>
-                </div>
-            </div>
-            <div class="a2hs-steps">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <div class="step-text">Tap the share button <i class="fas fa-share-alt"></i> in your browser</div>
-                </div>
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <div class="step-text">Scroll down and tap <strong>"Add to Home Screen"</strong></div>
-                </div>
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <div class="step-text">Tap <strong>"Add"</strong> in the top right</div>
-                </div>
-            </div>
-            <div class="a2hs-buttons">
-                <button class="a2hs-btn primary" onclick="showInstallInstructions()">Show Me How</button>
-                <button class="a2hs-btn secondary" onclick="hideA2HSPrompt()">Later</button>
-            </div>
+
+<!-- Navigation -->
+<nav role="navigation" aria-label="Main navigation">
+  <a href="https://ceylon.food" class="nav-logo" aria-label="ceylon.food home">ceylon<span>.food</span></a>
+  <ul class="nav-links">
+    <li><a href="#story">Our Story</a></li>
+    <li><a href="#why">Why Ceylon</a></li>
+    <li><a href="#process">How It's Made</a></li>
+    <li><a href="#faq">FAQ</a></li>
+    <li><a href="#shop" class="nav-cta">Shop Now</a></li>
+  </ul>
+</nav>
+
+<!-- Hero -->
+<header class="hero" role="banner">
+  <div class="hero-pattern" aria-hidden="true"></div>
+  <div class="hero-ring" aria-hidden="true"></div>
+  <div class="hero-ring" aria-hidden="true"></div>
+  <div class="hero-ring" aria-hidden="true"></div>
+  <span class="hero-eyebrow">ceylon.food — since the beginning of time</span>
+  <h1>The World's Only <em>True</em> Cinnamon</h1>
+  <p class="hero-sub">Grown on the tropical island of Sri Lanka for over 2,000 years. Rarer, sweeter, and safer than anything sold in a supermarket.</p>
+  <div class="hero-actions">
+    <a href="#shop" class="btn-primary">Shop Ceylon Cinnamon</a>
+    <a href="#story" class="btn-secondary">Read Our Story</a>
+  </div>
+  <div class="hero-scroll" aria-hidden="true">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</header>
+
+<!-- Intro / About -->
+<section class="intro-section" id="about" aria-labelledby="intro-heading">
+  <div class="container">
+    <div class="intro-grid">
+      <div>
+        <span class="section-label reveal">True Cinnamon from Sri Lanka</span>
+        <h2 id="intro-heading" class="reveal">Not all cinnamon is <em>equal</em></h2>
+        <p class="reveal">Most cinnamon sold in supermarkets around the world is not real cinnamon. It is Cassia — a cheaper bark from China and Vietnam with a harsher taste and dangerously high levels of coumarin, a compound that can damage your liver with regular use.</p>
+        <p class="reveal">Ceylon cinnamon (<em>Cinnamomum verum</em>) — "true cinnamon" — grows only in Sri Lanka. It has a delicate, complex sweetness, paper-thin layers that crumble at a touch, and coumarin levels so low they are undetectable. It is the only cinnamon recommended for daily use by European food safety authorities.</p>
+        <div class="intro-stats">
+          <div class="stat-card reveal">
+            <div class="stat-number">2,000+</div>
+            <div class="stat-label">Years of cinnamon cultivation in Sri Lanka</div>
+          </div>
+          <div class="stat-card reveal">
+            <div class="stat-number">80%</div>
+            <div class="stat-label">Of the world's true cinnamon comes from Sri Lanka</div>
+          </div>
+          <div class="stat-card reveal">
+            <div class="stat-number">1200×</div>
+            <div class="stat-label">Less coumarin than Cassia cinnamon</div>
+          </div>
+          <div class="stat-card reveal">
+            <div class="stat-number">100%</div>
+            <div class="stat-label">Direct from Ceylon — no middlemen</div>
+          </div>
         </div>
-
-        <!-- Floating Start Button -->
-        <div class="floating-start-btn">
-            <button id="floatingStartBtn" onclick="toggleTrip()">
-                <i class="fas fa-play"></i>
-            </button>
-            <div class="floating-label" id="floatingLabel">START TRIP</div>
+      </div>
+      <div class="intro-visual reveal">
+        <div class="intro-img-frame">
+          <svg class="cinnamon-illustration" viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg" aria-label="Illustration of Ceylon cinnamon quills">
+            <!-- Background warm wash -->
+            <rect width="400" height="500" fill="#F5EAD8"/>
+            <!-- Cinnamon quills illustration -->
+            <g transform="translate(200,250)">
+              <!-- Main large quill -->
+              <ellipse cx="0" cy="0" rx="30" ry="120" fill="#C0672A" opacity="0.9" transform="rotate(-15)"/>
+              <ellipse cx="0" cy="0" rx="22" ry="110" fill="#8B4513" opacity="0.7" transform="rotate(-15)"/>
+              <ellipse cx="0" cy="0" rx="14" ry="100" fill="#5C3317" opacity="0.5" transform="rotate(-15)"/>
+              <!-- Second quill -->
+              <ellipse cx="55" cy="-20" rx="25" ry="110" fill="#C0672A" opacity="0.8" transform="rotate(8)"/>
+              <ellipse cx="55" cy="-20" rx="17" ry="100" fill="#8B4513" opacity="0.6" transform="rotate(8)"/>
+              <!-- Third quill -->
+              <ellipse cx="-55" cy="10" rx="22" ry="105" fill="#C0672A" opacity="0.75" transform="rotate(-22)"/>
+              <ellipse cx="-55" cy="10" rx="14" ry="95" fill="#8B4513" opacity="0.55" transform="rotate(-22)"/>
+              <!-- Small star anise accent -->
+              <g transform="translate(80, 90) scale(0.7)">
+                <path d="M0,-30 L5,-8 L28,-8 L10,5 L18,28 L0,15 L-18,28 L-10,5 L-28,-8 L-5,-8 Z" fill="#B8860B" opacity="0.6"/>
+                <circle cx="0" cy="0" r="6" fill="#D4A843" opacity="0.8"/>
+              </g>
+              <!-- Small leaves -->
+              <ellipse cx="-80" cy="-70" rx="12" ry="22" fill="#4A7C3F" opacity="0.5" transform="rotate(30,-80,-70)"/>
+              <ellipse cx="75" cy="-80" rx="10" ry="18" fill="#4A7C3F" opacity="0.45" transform="rotate(-20,75,-80)"/>
+              <!-- Texture lines on main quill -->
+              <line x1="-8" y1="-100" x2="8" y2="-100" stroke="#FAF6F0" stroke-width="1" opacity="0.4" transform="rotate(-15) translate(0,0)"/>
+              <line x1="-12" y1="-70" x2="12" y2="-70" stroke="#FAF6F0" stroke-width="1" opacity="0.35" transform="rotate(-15)"/>
+              <line x1="-14" y1="-40" x2="14" y2="-40" stroke="#FAF6F0" stroke-width="1" opacity="0.3" transform="rotate(-15)"/>
+            </g>
+            <!-- Label at bottom -->
+            <text x="200" y="460" text-anchor="middle" font-family="Georgia, serif" font-style="italic" font-size="15" fill="#8B4513" opacity="0.7">Cinnamomum verum</text>
+            <text x="200" y="480" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="#8B4513" opacity="0.5" letter-spacing="2">TRUE CEYLON CINNAMON</text>
+          </svg>
         </div>
-
-        <!-- Floating Status Indicator -->
-        <div class="floating-status" id="floatingStatus">
-            <span class="status-dot"></span>
-            <span id="floatingStatusText">Ready to start</span>
-        </div>
-
-        <div id="map-container">
-            <div id="map"></div>
-        </div>
-        
-        <div id="meter-panel">
-            <!-- App Header with Minimize and Install buttons -->
-            <div class="app-header">
-                <div class="app-title">
-                    <i class="fas fa-taxi"></i>
-                    <span>Taxi Meter Pro</span>
-                </div>
-                <div class="header-controls">
-                    <button class="header-btn" id="installBtn" onclick="showA2HSPrompt()" title="Install App">
-                        <i class="fas fa-download"></i>
-                    </button>
-                    <button class="header-btn" id="minimizeBtn" onclick="toggleMinimize()" title="Minimize Map">
-                        <i class="fas fa-compress"></i>
-                    </button>
-                </div>
-            </div>
-
-            <div class="country-info" id="countryInfo">
-                <div class="country-flag" id="countryFlag">🌍</div>
-                <div class="country-details">
-                    <div class="country-label">Current Location</div>
-                    <div class="country-name" id="countryName">Detecting country...</div>
-                    <div class="country-city" id="countryCity">Please wait</div>
-                </div>
-            </div>
-            
-            <div class="meter-display">
-                <div class="fare" id="fare">0.00</div>
-                <div class="distance" id="distance">0.00 km</div>
-                <div class="time" id="time">00:00:00</div>
-            </div>
-
-            <div class="charts-container">
-                <div class="chart-box">
-                    <div class="chart-title">
-                        <i class="fas fa-tachometer-alt"></i> Speed Graph (km/h)
-                    </div>
-                    <div class="chart-container">
-                        <canvas id="speedChart"></canvas>
-                    </div>
-                </div>
-                
-                <div class="chart-box">
-                    <div class="chart-title">
-                        <i class="fas fa-rocket"></i> Acceleration Graph (m/s²)
-                    </div>
-                    <div class="chart-container">
-                        <canvas id="accelChart"></canvas>
-                    </div>
-                </div>
-
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-label">Current Speed</div>
-                        <div class="stat-value speed" id="currentSpeed">0.0</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-label">Current Accel</div>
-                        <div class="stat-value accel" id="currentAccel">0.00</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-label">Max Speed</div>
-                        <div class="stat-value max" id="maxSpeed">0.0</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-label">Avg Speed</div>
-                        <div class="stat-value avg" id="avgSpeed">0.0</div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="rates-panel">
-                <div class="rates-title">
-                    <i class="fas fa-sliders-h"></i> Fare Rates
-                    <div class="edit-toggle">
-                        <span class="toggle-label">Edit Rates</span>
-                        <label class="toggle-switch">
-                            <input type="checkbox" id="editRatesToggle" onchange="toggleRateEditing()">
-                            <span class="toggle-slider"></span>
-                        </label>
-                    </div>
-                </div>
-                
-                <div class="rate-inputs">
-                    <div class="rate-item">
-                        <div class="rate-label">Base Fare ($)</div>
-                        <input type="number" id="baseFareInput" class="rate-input" step="0.10" min="0" value="3.50" disabled>
-                    </div>
-                    <div class="rate-item">
-                        <div class="rate-label">Per km ($)</div>
-                        <input type="number" id="perKmInput" class="rate-input" step="0.10" min="0" value="2.00" disabled>
-                    </div>
-                    <div class="rate-item">
-                        <div class="rate-label">Per min ($)</div>
-                        <input type="number" id="perMinInput" class="rate-input" step="0.10" min="0" value="0.00" disabled>
-                    </div>
-                </div>
-                
-                <div class="quick-rates">
-                    <button class="quick-rate-btn" onclick="setQuickRates('economy')" id="economyBtn">Economy</button>
-                    <button class="quick-rate-btn" onclick="setQuickRates('standard')" id="standardBtn">Standard</button>
-                    <button class="quick-rate-btn" onclick="setQuickRates('luxury')" id="luxuryBtn">Luxury</button>
-                </div>
-                
-                <button id="applyRatesBtn" onclick="applyNewRates()" disabled>
-                    <i class="fas fa-check"></i> Apply New Rates
-                </button>
-                <div class="note">Note: Per minute rate is set to $0 by default (no time charge)</div>
-            </div>
-            
-            <div class="accuracy-indicator">
-                <div class="accuracy-dot"></div>
-                <div class="accuracy-text">
-                    <strong>High Accuracy Mode</strong><br>
-                    <span id="locationAccuracy">Waiting for GPS...</span>
-                </div>
-            </div>
-            
-            <div class="fare-breakdown">
-                <h4><i class="fas fa-calculator"></i> Fare Breakdown</h4>
-                <div class="breakdown-item">
-                    <span>Base Fare:</span>
-                    <span id="baseFare">$3.50</span>
-                </div>
-                <div class="breakdown-item">
-                    <span>Distance Charge:</span>
-                    <span id="distanceCharge">$0.00</span>
-                </div>
-                <div class="breakdown-item">
-                    <span>Time Charge:</span>
-                    <span id="timeCharge">$0.00</span>
-                </div>
-                <div class="breakdown-item">
-                    <span>Total:</span>
-                    <span id="totalBreakdown">$3.50</span>
-                </div>
-            </div>
-            
-            <div class="route-info">
-                <i class="fas fa-route"></i> <span id="routePoints">0</span> tracking points<br>
-                <i class="fas fa-satellite"></i> <span id="satellites">0</span> satellites<br>
-                <i class="fas fa-map-pin"></i> <span id="lastUpdate">No location yet</span>
-            </div>
-            
-            <div class="control-buttons">
-                <button id="stopBtn" onclick="stopTrip()" disabled>
-                    <i class="fas fa-stop"></i> Stop
-                </button>
-                <button id="resetBtn" onclick="resetTrip()">
-                    <i class="fas fa-redo-alt"></i> Reset
-                </button>
-            </div>
-        </div>
+      </div>
     </div>
+  </div>
+</section>
 
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script>
-        // Configuration - Default values
-        let BASE_FARE = 3.50;
-        let RATE_PER_KM = 2.00;
-        let RATE_PER_MINUTE = 0.00;
-        const MIN_ACCURACY = 20;
-        const MAX_DATA_POINTS = 30;
-        
-        // Global variables
-        let map;
-        let marker;
-        let pathPolyline;
-        let watchId;
-        let tripActive = false;
-        let startTime;
-        let lastPosition = null;
-        let lastTimestamp = null;
-        let totalDistance = 0;
-        let pathCoordinates = [];
-        let accuracyHistory = [];
-        
-        // Speed and acceleration tracking
-        let speedHistory = [];
-        let accelHistory = [];
-        let maxSpeed = 0;
-        let speedSum = 0;
-        let speedCount = 0;
-        let lastSpeed = 0;
-        
-        // Chart instances
-        let speedChart;
-        let accelChart;
-        
-        // Country variables
-        let countryData = null;
-        
-        // Minimize state
-        let isMinimized = false;
-        
-        // PWA install prompt
-        let deferredPrompt;
-        let isInstalled = false;
-        
-        // Initialize charts
-        function initCharts() {
-            const speedCtx = document.getElementById('speedChart').getContext('2d');
-            const accelCtx = document.getElementById('accelChart').getContext('2d');
-            
-            speedChart = new Chart(speedCtx, {
-                type: 'line',
-                data: {
-                    labels: [],
-                    datasets: [{
-                        label: 'Speed (km/h)',
-                        data: [],
-                        borderColor: '#3498db',
-                        backgroundColor: 'rgba(52, 152, 219, 0.1)',
-                        borderWidth: 2,
-                        fill: true,
-                        tension: 0.4,
-                        pointRadius: 2,
-                        pointHoverRadius: 5
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    animation: { duration: 0 },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            grid: { color: 'rgba(0,0,0,0.05)' },
-                            title: { display: true, text: 'km/h' }
-                        },
-                        x: { display: false }
-                    },
-                    plugins: { legend: { display: false } }
-                }
-            });
-            
-            accelChart = new Chart(accelCtx, {
-                type: 'line',
-                data: {
-                    labels: [],
-                    datasets: [{
-                        label: 'Acceleration (m/s²)',
-                        data: [],
-                        borderColor: '#e74c3c',
-                        backgroundColor: 'rgba(231, 76, 60, 0.1)',
-                        borderWidth: 2,
-                        fill: true,
-                        tension: 0.4,
-                        pointRadius: 2,
-                        pointHoverRadius: 5
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    animation: { duration: 0 },
-                    scales: {
-                        y: {
-                            grid: { color: 'rgba(0,0,0,0.05)' },
-                            title: { display: true, text: 'm/s²' }
-                        },
-                        x: { display: false }
-                    },
-                    plugins: { legend: { display: false } }
-                }
-            });
-        }
-        
-        // Toggle minimize/maximize
-        function toggleMinimize() {
-            isMinimized = !isMinimized;
-            const body = document.body;
-            const minimizeBtn = document.getElementById('minimizeBtn');
-            
-            if (isMinimized) {
-                body.classList.add('minimized');
-                minimizeBtn.innerHTML = '<i class="fas fa-expand"></i>';
-                minimizeBtn.title = 'Show Map';
-            } else {
-                body.classList.remove('minimized');
-                minimizeBtn.innerHTML = '<i class="fas fa-compress"></i>';
-                minimizeBtn.title = 'Minimize Map';
-                
-                // Refresh map size when expanding
-                setTimeout(() => {
-                    map.invalidateSize();
-                }, 300);
-            }
-        }
-        
-        // Add to Home Screen functionality
-        function showA2HSPrompt() {
-            const prompt = document.getElementById('a2hsPrompt');
-            prompt.classList.add('show');
-            
-            // Auto-hide after 10 seconds
-            setTimeout(() => {
-                prompt.classList.remove('show');
-            }, 10000);
-        }
-        
-        function hideA2HSPrompt() {
-            document.getElementById('a2hsPrompt').classList.remove('show');
-        }
-        
-        function showInstallInstructions() {
-            alert('To install:\n\n1. Tap the share/menu button in your browser\n2. Scroll down and select "Add to Home Screen"\n3. Tap "Add" to confirm');
-            hideA2HSPrompt();
-        }
-        
-        // Check if app is installed (running in standalone mode)
-        function checkIfInstalled() {
-            const isStandalone = window.matchMedia('(display-mode: standalone)').matches || 
-                                 window.navigator.standalone === true;
-            
-            if (isStandalone) {
-                isInstalled = true;
-                const installBtn = document.getElementById('installBtn');
-                installBtn.innerHTML = '<i class="fas fa-check"></i>';
-                installBtn.classList.add('installed');
-                installBtn.title = 'App Installed';
-            }
-        }
-        
-        // Listen for beforeinstallprompt event
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            
-            // Show install button
-            const installBtn = document.getElementById('installBtn');
-            installBtn.style.display = 'flex';
-        });
-        
-        // Update floating button based on trip state
-        function updateFloatingButton() {
-            const floatBtn = document.getElementById('floatingStartBtn');
-            const floatLabel = document.getElementById('floatingLabel');
-            const floatStatus = document.getElementById('floatingStatus');
-            const statusText = document.getElementById('floatingStatusText');
-            
-            if (tripActive) {
-                floatBtn.innerHTML = '<i class="fas fa-stop"></i>';
-                floatBtn.style.background = 'linear-gradient(135deg, #e74c3c, #c0392b)';
-                floatBtn.style.animation = 'none';
-                floatLabel.textContent = 'STOP TRIP';
-                floatLabel.style.background = 'rgba(231, 76, 60, 0.9)';
-                floatStatus.classList.add('active');
-                statusText.textContent = 'Trip in progress';
-            } else {
-                floatBtn.innerHTML = '<i class="fas fa-play"></i>';
-                floatBtn.style.background = 'linear-gradient(135deg, #2ecc71, #27ae60)';
-                floatBtn.style.animation = 'pulse-green 2s infinite';
-                floatLabel.textContent = 'START TRIP';
-                floatLabel.style.background = 'rgba(0, 0, 0, 0.7)';
-                floatStatus.classList.remove('active');
-            }
-        }
-        
-        // Toggle trip (start/stop)
-        function toggleTrip() {
-            if (!tripActive) {
-                startTrip();
-            } else {
-                stopTrip();
-            }
-        }
-        
-        // Update charts
-        function updateCharts(speed, acceleration) {
-            speedHistory.push(speed);
-            accelHistory.push(acceleration);
-            
-            if (speedHistory.length > MAX_DATA_POINTS) {
-                speedHistory.shift();
-                accelHistory.shift();
-            }
-            
-            speedChart.data.datasets[0].data = speedHistory;
-            accelChart.data.datasets[0].data = accelHistory;
-            
-            speedChart.data.labels = Array.from({ length: speedHistory.length }, (_, i) => i + 1);
-            accelChart.data.labels = Array.from({ length: accelHistory.length }, (_, i) => i + 1);
-            
-            speedChart.update();
-            accelChart.update();
-            
-            document.getElementById('currentSpeed').textContent = speed.toFixed(1);
-            document.getElementById('currentAccel').textContent = acceleration.toFixed(2);
-            
-            if (speed > maxSpeed) {
-                maxSpeed = speed;
-                document.getElementById('maxSpeed').textContent = maxSpeed.toFixed(1);
-            }
-            
-            speedSum += speed;
-            speedCount++;
-            const avgSpeed = speedSum / speedCount;
-            document.getElementById('avgSpeed').textContent = avgSpeed.toFixed(1);
-        }
-        
-        // Calculate acceleration
-        function calculateAcceleration(currentSpeed, lastSpeed, timeDiff) {
-            if (!lastSpeed || timeDiff <= 0) return 0;
-            const currentSpeedMs = currentSpeed / 3.6;
-            const lastSpeedMs = lastSpeed / 3.6;
-            return (currentSpeedMs - lastSpeedMs) / timeDiff;
-        }
-        
-        // Initialize map
-        function initMap() {
-            map = L.map('map').setView([0, 0], 15);
-            
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '© OpenStreetMap contributors',
-                maxZoom: 19
-            }).addTo(map);
-            
-            L.control.scale({ imperial: false, metric: true }).addTo(map);
-            
-            const customIcon = L.divIcon({
-                className: 'custom-marker',
-                html: '<div style="background: #2ecc71; width: 20px; height: 20px; border-radius: 50%; border: 3px solid white; box-shadow: 0 0 10px rgba(0,0,0,0.3);"></div>',
-                iconSize: [20, 20],
-                iconAnchor: [10, 10]
-            });
-            
-            marker = L.marker([0, 0], { icon: customIcon }).addTo(map);
-            
-            pathPolyline = L.polyline([], {
-                color: '#3498db',
-                weight: 4,
-                opacity: 0.7,
-                lineJoin: 'round'
-            }).addTo(map);
-        }
-        
-        // Get country from IP
-        async function getCountryFromIP() {
-            try {
-                const response = await fetch('https://ipapi.co/json/');
-                const data = await response.json();
-                
-                countryData = data;
-                
-                document.getElementById('countryName').textContent = data.country_name || 'Unknown';
-                document.getElementById('countryCity').textContent = data.city ? `${data.city}, ${data.country_name}` : 'Location detected';
-                
-                const flagEmoji = getFlagEmoji(data.country_code);
-                document.getElementById('countryFlag').textContent = flagEmoji;
-            } catch (error) {
-                document.getElementById('countryName').textContent = 'Location unavailable';
-                document.getElementById('countryCity').textContent = 'Using GPS only';
-                document.getElementById('countryFlag').textContent = '🌍';
-            }
-        }
-        
-        function getFlagEmoji(countryCode) {
-            if (!countryCode) return '🌍';
-            try {
-                const codePoints = countryCode.toUpperCase().split('').map(char => 127397 + char.charCodeAt());
-                if (codePoints.some(isNaN)) return '🌍';
-                return String.fromCodePoint(...codePoints);
-            } catch (e) {
-                return '🌍';
-            }
-        }
-        
-        function toggleRateEditing() {
-            const isEnabled = document.getElementById('editRatesToggle').checked;
-            const inputs = ['baseFareInput', 'perKmInput', 'perMinInput'];
-            const applyBtn = document.getElementById('applyRatesBtn');
-            
-            inputs.forEach(id => {
-                document.getElementById(id).disabled = !isEnabled;
-            });
-            
-            applyBtn.disabled = !isEnabled;
-            
-            if (!isEnabled) {
-                document.getElementById('baseFareInput').value = BASE_FARE;
-                document.getElementById('perKmInput').value = RATE_PER_KM;
-                document.getElementById('perMinInput').value = RATE_PER_MINUTE;
-            }
-        }
-        
-        function setQuickRates(type) {
-            if (!document.getElementById('editRatesToggle').checked) {
-                alert('Please enable rate editing first');
-                return;
-            }
-            
-            switch(type) {
-                case 'economy':
-                    document.getElementById('baseFareInput').value = 2.50;
-                    document.getElementById('perKmInput').value = 1.50;
-                    document.getElementById('perMinInput').value = 0.00;
-                    break;
-                case 'standard':
-                    document.getElementById('baseFareInput').value = 3.50;
-                    document.getElementById('perKmInput').value = 2.00;
-                    document.getElementById('perMinInput').value = 0.00;
-                    break;
-                case 'luxury':
-                    document.getElementById('baseFareInput').value = 5.00;
-                    document.getElementById('perKmInput').value = 3.00;
-                    document.getElementById('perMinInput').value = 0.00;
-                    break;
-            }
-        }
-        
-        function applyNewRates() {
-            if (tripActive) {
-                alert('Cannot change rates during an active trip. Please stop or reset the trip first.');
-                return;
-            }
-            
-            const newBase = parseFloat(document.getElementById('baseFareInput').value);
-            const newKm = parseFloat(document.getElementById('perKmInput').value);
-            const newMin = parseFloat(document.getElementById('perMinInput').value);
-            
-            if (isNaN(newBase) || isNaN(newKm) || isNaN(newMin) || 
-                newBase < 0 || newKm < 0 || newMin < 0) {
-                alert('Please enter valid positive numbers');
-                return;
-            }
-            
-            BASE_FARE = newBase;
-            RATE_PER_KM = newKm;
-            RATE_PER_MINUTE = newMin;
-            
-            document.getElementById('baseFare').textContent = `$${BASE_FARE.toFixed(2)}`;
-            
-            document.getElementById('editRatesToggle').checked = false;
-            toggleRateEditing();
-            
-            document.getElementById('status').innerHTML = '<i class="fas fa-check-circle"></i> Rates updated successfully';
-            setTimeout(() => {
-                if (!tripActive) {
-                    document.getElementById('status').innerHTML = '<i class="fas fa-taxi"></i> Ready to start trip';
-                }
-            }, 2000);
-        }
-        
-        function calculateDistance(lat1, lon1, lat2, lon2) {
-            const R = 6371;
-            const dLat = (lat2 - lat1) * Math.PI / 180;
-            const dLon = (lon2 - lon1) * Math.PI / 180;
-            const a = 
-                Math.sin(dLat/2) * Math.sin(dLat/2) +
-                Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
-                Math.sin(dLon/2) * Math.sin(dLon/2);
-            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-            return R * c;
-        }
-        
-        function formatTime(seconds) {
-            const hrs = Math.floor(seconds / 3600);
-            const mins = Math.floor((seconds % 3600) / 60);
-            const secs = Math.floor(seconds % 60);
-            return `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-        }
-        
-        function calculateFare(distance, duration) {
-            const distanceCharge = distance * RATE_PER_KM;
-            const timeCharge = (duration / 60) * RATE_PER_MINUTE;
-            return BASE_FARE + distanceCharge + timeCharge;
-        }
-        
-        function updateDisplay() {
-            if (!tripActive || !startTime) return;
-            
-            const now = new Date();
-            const elapsedSeconds = (now - startTime) / 1000;
-            
-            const fare = calculateFare(totalDistance, elapsedSeconds / 60);
-            const distanceCharge = totalDistance * RATE_PER_KM;
-            const timeCharge = (elapsedSeconds / 60) * RATE_PER_MINUTE;
-            
-            document.getElementById('fare').textContent = fare.toFixed(2);
-            document.getElementById('distance').textContent = totalDistance.toFixed(2) + ' km';
-            document.getElementById('time').textContent = formatTime(elapsedSeconds);
-            
-            document.getElementById('baseFare').textContent = `$${BASE_FARE.toFixed(2)}`;
-            document.getElementById('distanceCharge').textContent = `$${distanceCharge.toFixed(2)}`;
-            document.getElementById('timeCharge').textContent = `$${timeCharge.toFixed(2)}`;
-            document.getElementById('totalBreakdown').textContent = `$${fare.toFixed(2)}`;
-        }
-        
-        function handleLocationUpdate(position) {
-            const { latitude, longitude, accuracy, speed, timestamp } = position.coords;
-            
-            const accuracyInMeters = accuracy.toFixed(1);
-            document.getElementById('locationAccuracy').innerHTML = 
-                `±${accuracyInMeters}m <span style="color: ${accuracy <= MIN_ACCURACY ? '#2ecc71' : '#e74c3c'}">${accuracy <= MIN_ACCURACY ? '(High)' : '(Low)'}</span>`;
-            
-            document.getElementById('lastUpdate').textContent = new Date(timestamp).toLocaleTimeString();
-            
-            const currentSpeed = speed ? (speed * 3.6) : 0;
-            const timeDiff = lastTimestamp ? (timestamp - lastTimestamp) / 1000 : 0;
-            const acceleration = calculateAcceleration(currentSpeed, lastSpeed, timeDiff);
-            
-            document.getElementById('speed').textContent = currentSpeed.toFixed(1) + ' km/h';
-            
-            marker.setLatLng([latitude, longitude]);
-            
-            if (!lastPosition) {
-                map.setView([latitude, longitude], 18);
-            }
-            
-            if (tripActive && accuracy <= MIN_ACCURACY * 2) {
-                const currentPoint = [latitude, longitude];
-                
-                if (lastPosition) {
-                    const distance = calculateDistance(
-                        lastPosition.lat, lastPosition.lng,
-                        latitude, longitude
-                    );
-                    
-                    if (distance > 0.001) {
-                        totalDistance += distance;
-                        pathCoordinates.push(currentPoint);
-                        pathPolyline.setLatLngs(pathCoordinates);
-                        document.getElementById('routePoints').textContent = pathCoordinates.length;
-                        
-                        updateCharts(currentSpeed, acceleration);
-                        
-                        accuracyHistory.push(accuracy);
-                        if (accuracyHistory.length > 10) accuracyHistory.shift();
-                        const avgAccuracy = accuracyHistory.reduce((a, b) => a + b, 0) / accuracyHistory.length;
-                        
-                        if (avgAccuracy <= MIN_ACCURACY) {
-                            document.getElementById('status').innerHTML = '<i class="fas fa-check-circle"></i> High Accuracy Tracking';
-                        }
-                    }
-                }
-                
-                lastPosition = { lat: latitude, lng: longitude };
-                lastTimestamp = timestamp;
-                lastSpeed = currentSpeed;
-                updateDisplay();
-            }
-            
-            const satelliteEstimate = accuracy <= 5 ? 12 : accuracy <= 10 ? 8 : accuracy <= 20 ? 5 : 3;
-            document.getElementById('satellites').textContent = satelliteEstimate;
-        }
-        
-        function handleLocationError(error) {
-            let message = 'Location error';
-            switch(error.code) {
-                case 1: message = 'Please enable location access'; break;
-                case 2: message = 'GPS unavailable'; break;
-                case 3: message = 'GPS timeout'; break;
-            }
-            document.getElementById('locationAccuracy').innerHTML = `<span style="color: #e74c3c">${message}</span>`;
-        }
-        
-        function startTrip() {
-            if (!tripActive) {
-                if (watchId) {
-                    navigator.geolocation.clearWatch(watchId);
-                }
-                
-                watchId = navigator.geolocation.watchPosition(
-                    handleLocationUpdate,
-                    handleLocationError,
-                    {
-                        enableHighAccuracy: true,
-                        maximumAge: 0,
-                        timeout: 5000
-                    }
-                );
-                
-                tripActive = true;
-                startTime = new Date();
-                
-                document.getElementById('status').innerHTML = '<i class="fas fa-play"></i> Trip in progress';
-                document.getElementById('stopBtn').disabled = false;
-                updateFloatingButton();
-            }
-        }
-        
-        function stopTrip() {
-            if (tripActive) {
-                tripActive = false;
-                document.getElementById('status').innerHTML = '<i class="fas fa-flag-checkered"></i> Trip completed';
-                document.getElementById('stopBtn').disabled = true;
-                updateDisplay();
-                updateFloatingButton();
-            }
-        }
-        
-        function resetTrip() {
-            tripActive = false;
-            totalDistance = 0;
-            lastPosition = null;
-            lastTimestamp = null;
-            lastSpeed = 0;
-            pathCoordinates = [];
-            accuracyHistory = [];
-            
-            speedHistory = [];
-            accelHistory = [];
-            maxSpeed = 0;
-            speedSum = 0;
-            speedCount = 0;
-            
-            pathPolyline.setLatLngs([]);
-            
-            speedChart.data.datasets[0].data = [];
-            accelChart.data.datasets[0].data = [];
-            speedChart.update();
-            accelChart.update();
-            
-            document.getElementById('fare').textContent = '0.00';
-            document.getElementById('distance').textContent = '0.00 km';
-            document.getElementById('time').textContent = '00:00:00';
-            document.getElementById('speed').textContent = '0 km/h';
-            document.getElementById('routePoints').textContent = '0';
-            document.getElementById('baseFare').textContent = `$${BASE_FARE.toFixed(2)}`;
-            document.getElementById('distanceCharge').textContent = '$0.00';
-            document.getElementById('timeCharge').textContent = '$0.00';
-            document.getElementById('totalBreakdown').textContent = `$${BASE_FARE.toFixed(2)}`;
-            
-            document.getElementById('currentSpeed').textContent = '0.0';
-            document.getElementById('currentAccel').textContent = '0.00';
-            document.getElementById('maxSpeed').textContent = '0.0';
-            document.getElementById('avgSpeed').textContent = '0.0';
-            
-            document.getElementById('status').innerHTML = '<i class="fas fa-taxi"></i> Ready to start trip';
-            document.getElementById('stopBtn').disabled = true;
-            
-            updateFloatingButton();
-            
-            if (watchId) {
-                navigator.geolocation.clearWatch(watchId);
-                watchId = null;
-            }
-            
-            watchId = navigator.geolocation.watchPosition(
-                (position) => {
-                    const { latitude, longitude, accuracy } = position.coords;
-                    marker.setLatLng([latitude, longitude]);
-                    map.setView([latitude, longitude]);
-                    document.getElementById('locationAccuracy').textContent = `±${accuracy.toFixed(1)}m`;
-                    
-                    const satelliteEstimate = accuracy <= 5 ? 12 : accuracy <= 10 ? 8 : accuracy <= 20 ? 5 : 3;
-                    document.getElementById('satellites').textContent = satelliteEstimate;
-                },
-                handleLocationError,
-                {
-                    enableHighAccuracy: true,
-                    maximumAge: 0,
-                    timeout: 5000
-                }
-            );
-        }
-        
-        window.onload = function() {
-            initMap();
-            initCharts();
-            getCountryFromIP();
-            updateFloatingButton();
-            checkIfInstalled();
-            
-            // Auto-show A2HS prompt after 5 seconds if not installed
-            setTimeout(() => {
-                if (!isInstalled && !window.matchMedia('(display-mode: standalone)').matches) {
-                    showA2HSPrompt();
-                }
-            }, 5000);
-            
-            if (!navigator.geolocation) {
-                alert('Geolocation is not supported by your browser');
-                return;
-            }
-            
-            watchId = navigator.geolocation.watchPosition(
-                (position) => {
-                    const { latitude, longitude, accuracy } = position.coords;
-                    marker.setLatLng([latitude, longitude]);
-                    map.setView([latitude, longitude], 18);
-                    document.getElementById('locationAccuracy').textContent = `±${accuracy.toFixed(1)}m`;
-                    
-                    const satelliteEstimate = accuracy <= 5 ? 12 : accuracy <= 10 ? 8 : accuracy <= 20 ? 5 : 3;
-                    document.getElementById('satellites').textContent = satelliteEstimate;
-                },
-                handleLocationError,
-                {
-                    enableHighAccuracy: true,
-                    maximumAge: 0,
-                    timeout: 5000
-                }
-            );
-            
-            setInterval(() => {
-                if (tripActive) {
-                    updateDisplay();
-                }
-            }, 1000);
-        };
-        
-        window.onunload = function() {
-            if (watchId) {
-                navigator.geolocation.clearWatch(watchId);
-            }
-        };
-    </script>
+<!-- Story / History Timeline -->
+<section class="story-section" id="story" aria-labelledby="story-heading">
+  <div class="container">
+    <div style="text-align:center; margin-bottom:64px;">
+      <span class="section-label reveal">History</span>
+      <h2 id="story-heading" class="reveal">Two thousand years of <em>stories</em></h2>
+      <p style="max-width:560px; margin:0 auto; color:var(--text-muted);" class="reveal">Ceylon cinnamon has been traded, sought after, and treasured by every great civilisation on earth. This is its story.</p>
+    </div>
+    <div class="story-timeline" role="list">
+
+      <div class="story-item" role="listitem">
+        <div class="story-content-empty"></div>
+        <div class="story-center">
+          <div class="story-year">300 BC</div>
+          <div class="story-dot"></div>
+        </div>
+        <div class="story-content">
+          <div class="story-content-card reveal">
+            <h3>The Ancient Spice Routes</h3>
+            <p>Greek and Roman writers described Ceylon cinnamon as a gift from the gods — so precious it was offered only to royalty and burned in sacred temples. Arab merchants controlled the supply and kept its origin secret for centuries, calling it "cinnamon from the land at the edge of the world."</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="story-item" role="listitem">
+        <div class="story-content">
+          <div class="story-content-card reveal">
+            <h3>The Portuguese Discovery</h3>
+            <p>In 1505, Portuguese explorer Lourenço de Almeida landed on the island of Ceylon (now Sri Lanka) and discovered vast forests of cinnamon trees. The Portuguese established the first European trading posts and began exporting Ceylon cinnamon to Europe — triggering the age of spice trade that changed the world forever.</p>
+          </div>
+        </div>
+        <div class="story-center">
+          <div class="story-year">1505</div>
+          <div class="story-dot"></div>
+        </div>
+        <div class="story-content-empty"></div>
+      </div>
+
+      <div class="story-item" role="listitem">
+        <div class="story-content-empty"></div>
+        <div class="story-center">
+          <div class="story-year">1658</div>
+          <div class="story-dot"></div>
+        </div>
+        <div class="story-content">
+          <div class="story-content-card reveal">
+            <h3>The Dutch Monopoly</h3>
+            <p>The Dutch East India Company seized control of Ceylon and established the world's first cinnamon plantation. They so jealously guarded their monopoly that burning cinnamon was punishable by death in Amsterdam. A pound of Ceylon cinnamon was worth more than a working man's annual wage in Europe.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="story-item" role="listitem">
+        <div class="story-content">
+          <div class="story-content-card reveal">
+            <h3>Ceylon Returns to Its People</h3>
+            <p>Following independence in 1948, Sri Lankan farmers reclaimed their ancestral knowledge of cinnamon cultivation — passed down through generations of skilled peelers known as <em>chalias</em>. Today, small family farms in the Galle, Matara, and Kalutara districts continue to peel cinnamon by hand, exactly as their ancestors did.</p>
+          </div>
+        </div>
+        <div class="story-center">
+          <div class="story-year">1948</div>
+          <div class="story-dot"></div>
+        </div>
+        <div class="story-content-empty"></div>
+      </div>
+
+      <div class="story-item" role="listitem">
+        <div class="story-content-empty"></div>
+        <div class="story-center">
+          <div class="story-year">Today</div>
+          <div class="story-dot"></div>
+        </div>
+        <div class="story-content">
+          <div class="story-content-card reveal">
+            <h3>Direct to Your Table</h3>
+            <p>At ceylon.food, we source directly from family farms in southern Sri Lanka — cutting out every middleman so that more money reaches the farmers and you receive fresher, purer cinnamon than any supermarket can offer. The 2,000-year story of Ceylon cinnamon continues in every quill we send you.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Why Ceylon -->
+<section class="why-section" id="why" aria-labelledby="why-heading">
+  <div class="container">
+    <span class="section-label reveal">Why it matters</span>
+    <h2 id="why-heading" class="reveal">Six reasons Ceylon cinnamon<br>is <em>unlike</em> anything else</h2>
+    <div class="why-grid">
+      <div class="why-card reveal">
+        <span class="why-icon" aria-hidden="true" style="font-size:28px; color:#C0672A;">❧</span>
+        <h3>Ultra-low coumarin</h3>
+        <p>Ceylon cinnamon contains 1,200 times less coumarin than Cassia. The European Food Safety Authority specifically recommends Ceylon cinnamon for people who use cinnamon daily for health.</p>
+      </div>
+      <div class="why-card reveal">
+        <span class="why-icon" aria-hidden="true" style="font-size:28px; color:#C0672A;">❧</span>
+        <h3>Complex, delicate flavour</h3>
+        <p>Where Cassia is harsh and peppery, Ceylon cinnamon is light, sweet, and floral — with faint citrus notes. Chefs and bakers who have tried it never return to supermarket cinnamon.</p>
+      </div>
+      <div class="why-card why-highlight reveal">
+        <span class="why-icon" aria-hidden="true" style="font-size:28px; color:rgba(255,253,249,0.8);">❧</span>
+        <h3>Hand-peeled by skilled artisans</h3>
+        <p>Each quill is hand-peeled by chalias — master craftspeople who have spent their lives perfecting the technique of stripping, drying, and rolling cinnamon bark. This cannot be replicated by machines.</p>
+      </div>
+      <div class="why-card reveal">
+        <span class="why-icon" aria-hidden="true" style="font-size:28px; color:#C0672A;">❧</span>
+        <h3>Blood sugar support</h3>
+        <p>Multiple clinical studies show Ceylon cinnamon supports healthy blood sugar levels. Unlike Cassia, its low coumarin means you can safely take therapeutic amounts every day without risk to your liver.</p>
+      </div>
+      <div class="why-card reveal">
+        <span class="why-icon" aria-hidden="true" style="font-size:28px; color:#C0672A;">❧</span>
+        <h3>Direct from source</h3>
+        <p>We source directly from farmers in Galle and Matara — the heartland of Ceylon cinnamon. No warehouses, no brokers, no supermarket distribution. Fresh to your door from the farm.</p>
+      </div>
+      <div class="why-card reveal">
+        <span class="why-icon" aria-hidden="true" style="font-size:28px; color:#C0672A;">❧</span>
+        <h3>Geographically protected</h3>
+        <p>Ceylon cinnamon carries EU Geographical Indication status — like Champagne or Parma Ham. Only cinnamon grown in Sri Lanka can legally carry the name. Every order from ceylon.food is the real thing.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Process -->
+<section class="process-section" id="process" aria-labelledby="process-heading">
+  <div class="container">
+    <div style="text-align:center;">
+      <span class="section-label reveal">Craftsmanship</span>
+      <h2 id="process-heading" class="reveal">From tree to <em>table</em></h2>
+      <p style="max-width:500px; margin:0 auto; color:var(--text-muted);" class="reveal">Every step of making Ceylon cinnamon is done by hand. No shortcuts. No machines. Just 2,000 years of knowledge.</p>
+    </div>
+    <div class="process-steps" role="list">
+      <div class="process-step reveal" role="listitem">
+        <div class="step-circle" aria-hidden="true">1</div>
+        <h3>Harvest</h3>
+        <p>Young cinnamon shoots are harvested by hand during the rainy season when the bark is most supple and aromatic.</p>
+      </div>
+      <div class="process-step reveal" role="listitem">
+        <div class="step-circle" aria-hidden="true">2</div>
+        <h3>Peel</h3>
+        <p>Skilled chalias use a special curved knife to separate the outer bark from the inner layer — leaving only the paper-thin cinnamon underneath.</p>
+      </div>
+      <div class="process-step reveal" role="listitem">
+        <div class="step-circle" aria-hidden="true">3</div>
+        <h3>Roll</h3>
+        <p>The thin strips are rolled together into the signature quill shape and left to dry naturally in the shade for several days.</p>
+      </div>
+      <div class="process-step reveal" role="listitem">
+        <div class="step-circle" aria-hidden="true">4</div>
+        <h3>Grade & Ship</h3>
+        <p>Each quill is graded by hand for quality. Only the finest grades leave Sri Lanka — packed and shipped directly to your door.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq-section" id="faq" aria-labelledby="faq-heading">
+  <div class="container-narrow">
+    <span class="section-label reveal">Common questions</span>
+    <h2 id="faq-heading" class="reveal">Everything you want to <em>know</em></h2>
+    <div class="faq-list" role="list">
+
+      <div class="faq-item reveal" role="listitem" onclick="toggleFaq(this)">
+        <div class="faq-question">
+          <span class="faq-q-text">What is Ceylon cinnamon and how is it different?</span>
+          <div class="faq-toggle" aria-hidden="true">+</div>
+        </div>
+        <div class="faq-answer">Ceylon cinnamon (<em>Cinnamomum verum</em>) is the only true cinnamon in the world, grown exclusively in Sri Lanka. Most "cinnamon" sold in supermarkets is actually Cassia — a related but different plant from China or Vietnam. Ceylon cinnamon has a lighter, more complex flavour and contains up to 1,200 times less coumarin, a compound that can damage the liver at high doses. Ceylon is the only variety safe for daily therapeutic use.</div>
+      </div>
+
+      <div class="faq-item reveal" role="listitem" onclick="toggleFaq(this)">
+        <div class="faq-question">
+          <span class="faq-q-text">Why does Ceylon cinnamon look different from supermarket cinnamon?</span>
+          <div class="faq-toggle" aria-hidden="true">+</div>
+        </div>
+        <div class="faq-answer">Ceylon cinnamon quills are made up of many paper-thin layers rolled together — like a cigar. If you snap one open, you will see multiple delicate layers. Cassia cinnamon (supermarket cinnamon) is thick, hard, and has only one or two layers — it is difficult to break and has a rough, hollow interior. The colour of Ceylon cinnamon is also a lighter tan-brown, not the deep reddish-brown of Cassia.</div>
+      </div>
+
+      <div class="faq-item reveal" role="listitem" onclick="toggleFaq(this)">
+        <div class="faq-question">
+          <span class="faq-q-text">Is Ceylon cinnamon good for blood sugar?</span>
+          <div class="faq-toggle" aria-hidden="true">+</div>
+        </div>
+        <div class="faq-answer">Yes. Multiple clinical studies have found that Ceylon cinnamon can help support healthy blood sugar levels by improving insulin sensitivity. Because of its extremely low coumarin content, Ceylon cinnamon is the only type safe to consume daily in meaningful amounts for health benefits. Cassia cinnamon contains too much coumarin to safely use therapeutically over the long term. Always speak to your doctor before using cinnamon medicinally.</div>
+      </div>
+
+      <div class="faq-item reveal" role="listitem" onclick="toggleFaq(this)">
+        <div class="faq-question">
+          <span class="faq-q-text">Where does your cinnamon come from?</span>
+          <div class="faq-toggle" aria-hidden="true">+</div>
+        </div>
+        <div class="faq-answer">All our cinnamon is sourced directly from small family farms in the Galle, Matara, and Kalutara districts of southern Sri Lanka — the traditional heartland of Ceylon cinnamon cultivation. We work directly with farmers, cutting out all middlemen. This means fresher cinnamon for you and fairer prices for the people who grow it.</div>
+      </div>
+
+      <div class="faq-item reveal" role="listitem" onclick="toggleFaq(this)">
+        <div class="faq-question">
+          <span class="faq-q-text">Do you ship internationally?</span>
+          <div class="faq-toggle" aria-hidden="true">+</div>
+        </div>
+        <div class="faq-answer">Yes — we ship to the USA, United Kingdom, Australia, Canada, Europe, and the UAE using DHL Express and Sri Lanka Post EMS. Most international orders arrive within 7–14 business days. We offer free shipping on orders above $35. All orders are carefully packed to protect the cinnamon during transit.</div>
+      </div>
+
+      <div class="faq-item reveal" role="listitem" onclick="toggleFaq(this)">
+        <div class="faq-question">
+          <span class="faq-q-text">How should I store Ceylon cinnamon?</span>
+          <div class="faq-toggle" aria-hidden="true">+</div>
+        </div>
+        <div class="faq-answer">Store cinnamon sticks and powder in an airtight container in a cool, dark place away from direct sunlight. Properly stored, cinnamon sticks last up to 3–4 years and ground cinnamon up to 2 years. The quills can be ground fresh at home in a spice grinder or mortar and pestle for the most intense flavour.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="shop" aria-labelledby="cta-heading">
+  <span class="section-label">ceylon.food</span>
+  <h2 id="cta-heading">Taste the <em>real</em> cinnamon</h2>
+  <p>Direct from Sri Lankan farms to your door. Premium Ceylon cinnamon sticks, powder, and spice collections — shipped worldwide.</p>
+  <div>
+    <a href="https://ceylon.food/shop" class="btn-white">Shop Cinnamon</a>
+    <a href="https://ceylon.food/shop" class="btn-outline-white">View Gift Sets</a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer role="contentinfo">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="https://ceylon.food" class="nav-logo">ceylon<span style="color:var(--cinnamon-light)">.food</span></a>
+      <p>Premium Ceylon cinnamon and spices sourced directly from family farms in Sri Lanka. The only true cinnamon — shipped worldwide.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Shop</h4>
+      <ul>
+        <li><a href="#">Cinnamon Sticks</a></li>
+        <li><a href="#">Ground Cinnamon</a></li>
+        <li><a href="#">Spice Gift Sets</a></li>
+        <li><a href="#">Cinnamon Oil</a></li>
+        <li><a href="#">Wholesale</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Learn</h4>
+      <ul>
+        <li><a href="#">Ceylon vs Cassia</a></li>
+        <li><a href="#">Health Benefits</a></li>
+        <li><a href="#">How It's Made</a></li>
+        <li><a href="#">Recipes</a></li>
+        <li><a href="#">Blog</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Shipping Info</a></li>
+        <li><a href="#">Returns</a></li>
+        <li><a href="mailto:hello@ceylon.food">hello@ceylon.food</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 ceylon.food — All rights reserved</span>
+    <span>True Ceylon Cinnamon · Direct from Sri Lanka · Shipped Worldwide</span>
+  </div>
+</footer>
+
+<script>
+function toggleFaq(el) {
+  const isOpen = el.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i => {
+    i.classList.remove('open');
+    i.querySelector('.faq-toggle').textContent = '+';
+  });
+  if (!isOpen) {
+    el.classList.add('open');
+    el.querySelector('.faq-toggle').textContent = '−';
+  }
+}
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+      observer.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
 </body>
 </html>
